@@ -5,6 +5,7 @@ import * as https from 'https';
 import { readAllLessons } from './read-all-lessons.route';
 import { createUser } from './create-user.route';
 import { getUser } from './get-user-route';
+import { logout } from './logout.rout';
 
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -33,6 +34,9 @@ app.route('/api/signup')
 
 app.route('/api/user')
   .get(getUser);
+
+app.route('/api/logout')
+  .post(logout);
 
 
 if (options.secure) {

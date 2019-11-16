@@ -48,4 +48,12 @@ export class AuthService {
 
   }
 
+  logOut(): Observable<any> {
+    return this.http.post('/api/logout', null)
+      .pipe(
+        shareReplay(), // для избежания повторной отправки на стороне клиента
+        tap(() => this.subject.next(ANONYMOUS_USER)),
+      );
+  }
+
 }

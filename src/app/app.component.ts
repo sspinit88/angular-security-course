@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from './model/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,9 @@ export class AppComponent implements OnInit {
   isLoggedIn$: Observable<boolean>;
   isLoggedOut$: Observable<boolean>;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+              private router: Router,
+  ) {
 
   }
 
@@ -23,7 +26,11 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-
+    this.authService.logOut()
+      .subscribe(() => {
+        console.log('File: app.component.ts, Line - 31, 1:', 1);
+        this.router.navigate(['signup']);
+      });
   }
 
 }
