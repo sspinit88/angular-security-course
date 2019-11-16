@@ -56,4 +56,12 @@ export class AuthService {
       );
   }
 
+  login(email, password): Observable<any> {
+    return this.http.post('/api/login', { email, password })
+      .pipe(
+        shareReplay(),
+        tap(user => this.subject.next(user)),
+      );
+  }
+
 }
