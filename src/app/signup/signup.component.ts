@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'signup',
@@ -10,7 +12,10 @@ export class SignupComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+  ) {
 
     this.form = this.fb.group({
       email: ['', Validators.required],
@@ -21,15 +26,24 @@ export class SignupComponent implements OnInit {
 
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
 
   }
 
 
   signUp() {
-    const val = this.form.value;
+    const
+      val = this.form.value;
 
-    //TODO
+    if (val.email && val.password && val.password === val.confirm) {
+      this.authService
+        .signUp(val.email, val.password)
+        .subscribe(
+          res => console.log('File: signup.component.ts, Line - 42, res:', res),
+          err => console.log('File: signup.component.ts, Line - 43, err:', err),
+        );
+    }
+
 
   }
 
