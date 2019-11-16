@@ -28,6 +28,13 @@ async function createUserAndSession(res: Response, credentials) {
     .then(bytes => bytes.toString('hex'));
   console.log('File: create-user.route.ts, Line - 32, sessionId:', sessionId);
   sessionStore.createSession(sessionId, user);
-  res.cookie('SESSIONID', sessionId, { httpOnly: true });
+  res.cookie(
+    'SESSIONID', // имя кук
+    sessionId, // данные
+    {
+      httpOnly: true, // хащита кук, js не вытащит на клиенте
+      secure: true, // переключаем на https (защищенный)
+    }
+  );
   res.status(200).json({ id: user.id, email: user.email });
 }
