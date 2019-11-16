@@ -18,10 +18,15 @@ export class AuthService {
   user$: Observable<User> = this.subject
     .asObservable()
     .pipe(
+      // tap(user => console.log('File: auth.service.ts, Line - 21, user:', user)),
       filter(user => !!user), // фильтруем данные, передаем только тогда, когда данные пользователя есть
     );
 
-  isLoggedIn$: Observable<boolean> = this.user$.pipe(map(user => !!user.id));
+  isLoggedIn$: Observable<boolean> = this.user$
+    .pipe(
+      // tap(user => console.log('File: auth.service.ts, Line - 27, user.id:', user.id)),
+      map(user => !!user.id),
+    );
 
   isLoggedOut$: Observable<boolean> = this.isLoggedIn$.pipe(map(isLoggedIn => !isLoggedIn));
 
@@ -39,7 +44,7 @@ export class AuthService {
 
     return this.http.post<User>('/api/signup', { email, password }).pipe(
       shareReplay(),
-      tap(user => this.subject.next(user)),);
+      tap(user => this.subject.next(user)));
 
   }
 
