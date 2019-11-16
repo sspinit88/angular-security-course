@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   signUp(email: string, password: string): Observable<UserModel> {
-    return this._http.post<UserModel>('/api/signUp', { email, password })
+    return this._http.post<UserModel>('/api/signup', { email, password })
       .pipe(
         shareReplay(),
         tap(user => this.subject.next(user)),

@@ -34,7 +34,7 @@ export class SignupComponent implements OnInit {
   signUp() {
     const
       val = this.form.value;
-
+    console.log('File: signup.component.ts, Line - 37, val:', val);
     if (val.email && val.password && val.password === val.confirm) {
       this.authService
         .signUp(val.email, val.password)
